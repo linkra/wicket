@@ -1,10 +1,16 @@
 package wicket;
 
 import io.dropwizard.Application;
+
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import wicket.cli.WicketCommand;
+import org.skife.jdbi.v2.DBI;
+import wicket.db.jdbi.UserQueries;
+
+import wicket.health.DatabaseHealthCheck;
 import wicket.health.TemplateHealthCheck;
+import wicket.resources.UserResource;
 import wicket.resources.WicketResource;
 
 public class WicketApplication extends Application<WicketConfiguration> {
@@ -20,22 +26,44 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<WicketConfiguration> bootstrap) {
-        bootstrap.addCommand(new WicketCommand());
+
+
     }
 
     @Override
-    public void run(final WicketConfiguration configuration, final Environment environment) {
+    public void run(final WicketConfiguration config, final Environment environment) {
 
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "mysql");
+        
+        final UserQueries dao = jdbi.onDemand(UserQueries.class);
+
+        environment.jersey().register(new UserResource(dao));
+
+        final DatabaseHealthCheck dbihealthCheck =
+                new DatabaseHealthCheck(jdbi, config.getDataSourceFactory().getValidationQuery() );
+
+        environment.healthChecks().register("database", dbihealthCheck);
+
+
+
+
+
+        // TEST
         final WicketResource resource = new WicketResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
+                config.getTemplate(),
+                config.getDefaultName()
         );
 
         final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
+                new TemplateHealthCheck(config.getTemplate());
         environment.healthChecks().register("template", healthCheck);
 
         environment.jersey().register(resource);
     }
+
+
+
+
 
 }

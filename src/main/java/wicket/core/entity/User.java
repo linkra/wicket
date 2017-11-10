@@ -1,46 +1,35 @@
 package wicket.core.entity;
 
-
-
-
-import javax.persistence.*;
-
-@Entity
-@Table(name="user")
-@NamedQueries({
-        @NamedQuery(name = "wicket.core.entity.User.findAll",
-                query = "select u from user u"),
-        @NamedQuery(name = "wicket.core.entity.User.findBySurname",
-                query = "select n from user n "
-                        + "where n.surname like :surname ")
-})
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long userid;
 
-    @Column(name = "firstname")
     private String firstname;
 
-    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "pwd")
     private String pwd;
 
-    @Column(name = "username")
     private String username;
 
     public User() {
     }
 
-    public User(String firstname, String surname, String address, String email, String pwd, String username) {
+    public User(String surname) {
+        this.surname = "No user found";
+    }
+
+    public User(Long userid, String surname) {
+        this.userid = userid;
+        this.surname = surname;
+    }
+
+    public User(Long userid, String firstname, String surname, String address, String email, String pwd, String username) {
+        this.userid = userid;
         this.firstname = firstname;
         this.surname = surname;
         this.address = address;
@@ -49,8 +38,13 @@ public class User {
         this.username = username;
     }
 
+
     public Long getUserid() {
         return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getFirstname() {

@@ -17,7 +17,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<WicketConfiguration> bootstrap) {
-        // TODO: application initialization
+        // TODO: github test
     }
 
     @Override

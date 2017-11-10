@@ -3,6 +3,7 @@ package wicket;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import wicket.cli.WicketCommand;
 import wicket.health.TemplateHealthCheck;
 import wicket.resources.WicketResource;
 
@@ -19,7 +20,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<WicketConfiguration> bootstrap) {
-        // TODO: github test
+        bootstrap.addCommand(new WicketCommand());
     }
 
     @Override

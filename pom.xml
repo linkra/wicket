@@ -11,7 +11,7 @@
 
     <groupId>wicket</groupId>
     <artifactId>wicket</artifactId>
-    <version>wicket</version>
+    <version>1.0-wicket-snapshot</version>
     <packaging>jar</packaging>
 
     <name>Wicket</name>
@@ -40,6 +40,26 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-db</artifactId>
+            <version>1.2.0-rc1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-jdbi</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-hibernate</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.36</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>

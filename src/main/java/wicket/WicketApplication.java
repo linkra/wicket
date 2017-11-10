@@ -8,6 +8,7 @@ import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 import wicket.db.jdbi.UserQueries;
 
+import wicket.db.jdbi.UserUpdate;
 import wicket.health.DatabaseHealthCheck;
 import wicket.health.TemplateHealthCheck;
 import wicket.resources.UserResource;
@@ -36,9 +37,10 @@ public class WicketApplication extends Application<WicketConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "mysql");
         
-        final UserQueries dao = jdbi.onDemand(UserQueries.class);
+        final UserQueries queries = jdbi.onDemand(UserQueries.class);
+        final UserUpdate userUpdate = jdbi.onDemand(UserUpdate.class);
 
-        environment.jersey().register(new UserResource(dao));
+        environment.jersey().register(new UserResource(queries, userUpdate));
 
         final DatabaseHealthCheck dbihealthCheck =
                 new DatabaseHealthCheck(jdbi, config.getDataSourceFactory().getValidationQuery() );

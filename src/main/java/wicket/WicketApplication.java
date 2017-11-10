@@ -3,6 +3,8 @@ package wicket;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import wicket.health.TemplateHealthCheck;
+import wicket.resources.WicketResource;
 
 public class WicketApplication extends Application<WicketConfiguration> {
 
@@ -21,9 +23,18 @@ public class WicketApplication extends Application<WicketConfiguration> {
     }
 
     @Override
-    public void run(final WicketConfiguration configuration,
-                    final Environment environment) {
-        // TODO: implement application
+    public void run(final WicketConfiguration configuration, final Environment environment) {
+
+        final WicketResource resource = new WicketResource(
+                configuration.getTemplate(),
+                configuration.getDefaultName()
+        );
+
+        final TemplateHealthCheck healthCheck =
+                new TemplateHealthCheck(configuration.getTemplate());
+        environment.healthChecks().register("template", healthCheck);
+
+        environment.jersey().register(resource);
     }
 
 }

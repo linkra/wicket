@@ -9,9 +9,12 @@ import org.skife.jdbi.v2.DBI;
 import wicket.db.jdbi.UserQueries;
 
 import wicket.db.jdbi.UserUpdate;
+import wicket.db.jdbi.UserlogQueries;
+import wicket.db.jdbi.UserlogUpdate;
 import wicket.health.DatabaseHealthCheck;
 import wicket.health.TemplateHealthCheck;
 import wicket.resources.UserResource;
+import wicket.resources.UserlogResource;
 import wicket.resources.WicketResource;
 
 public class WicketApplication extends Application<WicketConfiguration> {
@@ -37,10 +40,14 @@ public class WicketApplication extends Application<WicketConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "mysql");
         
-        final UserQueries queries = jdbi.onDemand(UserQueries.class);
+        final UserQueries userQueries = jdbi.onDemand(UserQueries.class);
         final UserUpdate userUpdate = jdbi.onDemand(UserUpdate.class);
 
-        environment.jersey().register(new UserResource(queries, userUpdate));
+        final UserlogQueries userlogQueries = jdbi.onDemand(UserlogQueries.class);
+        final UserlogUpdate userlogUpdate = jdbi.onDemand(UserlogUpdate.class);
+
+        environment.jersey().register(new UserResource(userQueries, userUpdate));
+        environment.jersey().register(new UserlogResource(userlogQueries, userlogUpdate));
 
         final DatabaseHealthCheck dbihealthCheck =
                 new DatabaseHealthCheck(jdbi, config.getDataSourceFactory().getValidationQuery() );

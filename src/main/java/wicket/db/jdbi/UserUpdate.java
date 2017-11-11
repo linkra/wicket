@@ -9,6 +9,6 @@ import wicket.core.mapper.UserMapper;
 @RegisterMapper(UserMapper.class)
 public interface UserUpdate {
 
-    @SqlUpdate("insert into user (userid, firstname, surname, address, email, pwd, username) values (:userid, :firstname, :surname, :address, :email, :pwd, :username)")
+    @SqlUpdate("insert into user (firstname, surname, address, email, pwd, username) values (:firstname, :surname, :address, :email, :pwd, :username)")
     void insert(@BindBean User u);
 }

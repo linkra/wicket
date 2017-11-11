@@ -6,14 +6,16 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
-import wicket.db.jdbi.UserQueries;
+import wicket.db.jdbi.queries.UserQueries;
 
-import wicket.db.jdbi.UserUpdate;
-import wicket.db.jdbi.UserlogQueries;
-import wicket.db.jdbi.UserlogUpdate;
+import wicket.db.jdbi.queries.UserinfoQueries;
+import wicket.db.jdbi.update.UserUpdate;
+import wicket.db.jdbi.queries.UserlogQueries;
+import wicket.db.jdbi.update.UserlogUpdate;
 import wicket.health.DatabaseHealthCheck;
 import wicket.health.TemplateHealthCheck;
 import wicket.resources.UserResource;
+import wicket.resources.UserinfoResource;
 import wicket.resources.UserlogResource;
 import wicket.resources.WicketResource;
 
@@ -45,17 +47,16 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
         final UserlogQueries userlogQueries = jdbi.onDemand(UserlogQueries.class);
         final UserlogUpdate userlogUpdate = jdbi.onDemand(UserlogUpdate.class);
+        final UserinfoQueries userinfoQueries = jdbi.onDemand(UserinfoQueries.class);
 
         environment.jersey().register(new UserResource(userQueries, userUpdate));
         environment.jersey().register(new UserlogResource(userlogQueries, userlogUpdate));
+        environment.jersey().register(new UserinfoResource(userinfoQueries));
 
         final DatabaseHealthCheck dbihealthCheck =
                 new DatabaseHealthCheck(jdbi, config.getDataSourceFactory().getValidationQuery() );
 
         environment.healthChecks().register("database", dbihealthCheck);
-
-
-
 
 
         // TEST

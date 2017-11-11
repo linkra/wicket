@@ -2,11 +2,12 @@ package wicket.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import wicket.core.entity.Userlog;
-import wicket.db.jdbi.UserlogQueries;
-import wicket.db.jdbi.UserlogUpdate;
+import wicket.db.jdbi.queries.UserlogQueries;
+import wicket.db.jdbi.update.UserlogUpdate;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Path("/wicket/userlog")
@@ -25,7 +26,7 @@ public class UserlogResource {
     @GET
     @Path("/{userid}")
     @Timed
-    public Userlog findSuccessfulAttemptsByUserid(@PathParam("userid") String userid) {
+    public List<Userlog> findSuccessfulAttemptsByUserid(@PathParam("userid") String userid) {
         return userlogQueries.findSuccessByUserid(userid);
     }
 

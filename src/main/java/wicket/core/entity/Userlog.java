@@ -1,7 +1,5 @@
 package wicket.core.entity;
 
-import java.time.LocalDateTime;
-
 public class Userlog {
     private Long logid;
     private Long userid;

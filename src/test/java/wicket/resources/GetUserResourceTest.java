@@ -1,6 +1,5 @@
 package wicket.resources;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.After;
@@ -12,12 +11,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.runners.MockitoJUnitRunner;
 import wicket.core.entity.User;
-import wicket.db.jdbi.UserQueries;
-import wicket.db.jdbi.UserUpdate;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import wicket.db.jdbi.queries.UserQueries;
+import wicket.db.jdbi.update.UserUpdate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;

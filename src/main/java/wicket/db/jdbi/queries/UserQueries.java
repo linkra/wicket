@@ -1,4 +1,4 @@
-package wicket.db.jdbi;
+package wicket.db.jdbi.queries;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;

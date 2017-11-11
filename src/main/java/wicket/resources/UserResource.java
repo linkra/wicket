@@ -3,8 +3,8 @@ package wicket.resources;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.jersey.params.LongParam;
 import wicket.core.entity.User;
-import wicket.db.jdbi.UserQueries;
-import wicket.db.jdbi.UserUpdate;
+import wicket.db.jdbi.queries.UserQueries;
+import wicket.db.jdbi.update.UserUpdate;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

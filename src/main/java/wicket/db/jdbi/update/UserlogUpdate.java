@@ -1,4 +1,4 @@
-package wicket.db.jdbi;
+package wicket.db.jdbi.update;
 
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

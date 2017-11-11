@@ -32,5 +32,19 @@ server:
   applicationContextPath: /
   connector:
     type: http
-    port: 8080
+    port: 8787
+
+
+# Logging settings.
+logging:
+  level: INFO
+  appenders:
+    - type: console
+    - type: file
+      currentLogFilename: './logs/application.log'
+      archivedLogFilenamePattern: './logs/application-%d-%i.log.gz'
+      archive: true
+      archivedFileCount: 7
+      maxFileSize: '1mb'
+
 

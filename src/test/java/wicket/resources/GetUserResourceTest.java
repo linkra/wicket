@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserResourceTest {
+public class GetUserResourceTest {
     private static final UserQueries queries = mock(UserQueries.class);
     private static final UserUpdate update = mock(UserUpdate.class);
 
@@ -68,17 +68,12 @@ public class UserResourceTest {
     }
 
     @Test
-    public void addUserSuccess() throws JsonProcessingException {
-        User user2 = new User();
-        when(update.insert(any(User.class))).thenReturn(user2);
-        final Response response = RULE.target("/wicket/user")
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(user2, MediaType.APPLICATION_JSON_TYPE));
-
-        assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK);
-        verify(update).insert(userCaptor.capture());
-        //assertThat(userCaptor.getValue()).isEqualTo(user2); // FIXME! blir två olika objekt
-
-        
+    public void findByUsernameSuccess() throws Exception {
+        when(queries.findByUserid(10L)).thenReturn(user);
+        User found = RULE.target("/wicket/user/10").request().get(User.class);
+        assertThat(found.getUserid()).isEqualTo(user.getUserid());
+        verify(queries).findByUserid(10L);
     }
+
+
 }

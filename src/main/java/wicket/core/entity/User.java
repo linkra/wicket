@@ -28,6 +28,14 @@ public class User {
         this.surname = surname;
     }
 
+    public User(Long userid, String firstname, String surname, String pwd, String username) {
+        this.userid = userid;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.pwd = pwd;
+        this.username = username;
+    }
+
     public User(Long userid, String firstname, String surname, String address, String email, String pwd, String username) {
         this.userid = userid;
         this.firstname = firstname;

@@ -53,8 +53,8 @@ public class UserResource {
 
     @POST
     @Timed
-    public User addUser(User user) {
-        return userUpdate.insert(user);
+    public void addUser(User user) {
+        userUpdate.insert(user);
     }
 
     

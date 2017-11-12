@@ -19,7 +19,9 @@ database:
   # any properties specific to your JDBC driver:
   properties:
     charSet: UTF-8
-
+    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    hibernate.hbm2ddl.auto: update
+    hibernate.show_sql: true
 
   # the SQL query to run when validating a connection's liveness
   validationQuery: "/* MyService Health Check */ SELECT 1"
@@ -32,7 +34,17 @@ server:
     type: http
     port: 9000
 
-views:
-  .mustache:
-    strict_syntax: yes   mustache
+
+# Logging settings.
+logging:
+  level: INFO
+  appenders:
+    - type: console
+    - type: file
+      currentLogFilename: './logs/application.log'
+      archivedLogFilenamePattern: './logs/application-%d-%i.log.gz'
+      archive: true
+      archivedFileCount: 7
+      maxFileSize: '1mb'
+
 

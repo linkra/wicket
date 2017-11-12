@@ -9,17 +9,19 @@
         <maven>3.0.0</maven>
     </prerequisites>
 
-    <groupId>wicket-parent</groupId>
-    <artifactId>wicket</artifactId>
+    <parent>
+        <groupId>wicket-parent</groupId>
+        <artifactId>wicket</artifactId>
+        <version>1.0-wicket-snapshot</version>
+    </parent>
+
+    <groupId>wicketserver</groupId>
+    <artifactId>wicketserver</artifactId>
     <version>1.0-wicket-snapshot</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>Wicket</name>
-
-    <modules>
-        <module>server</module>
-        <module>web</module>
-    </modules>
+    <name>Wicket Server</name>
+    
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,6 +80,12 @@
         </dependency>
 
         <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-views-mustache</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>2.0.2-beta</version>
@@ -100,6 +108,11 @@
             <artifactId>jersey-client</artifactId>
             <version>1.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>2.0.2-beta</version>
         </dependency>
 
     </dependencies>
@@ -183,9 +196,8 @@
                     </execution>
                 </executions>
             </plugin>
-          
 
-            
+
 
         </plugins>
     </build>

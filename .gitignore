@@ -95,7 +95,7 @@
 .idea/vcs.xml
 .idea/workspace.xml
 dependency-reduced-pom.xml
-logs/
+server/logs/
 src/main/java/wicket/cli/
 src/main/java/wicket/client/
 src/main/resources/assets/

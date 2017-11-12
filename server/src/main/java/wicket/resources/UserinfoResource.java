@@ -20,11 +20,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserinfoResource {
 
     private final UserinfoQueries userinfoQueries;
-    private final AtomicLong counter;  // FIXME!!
 
     public UserinfoResource(UserinfoQueries userinfoQueries) {
         this.userinfoQueries = userinfoQueries;
-        this.counter = new AtomicLong();
     }
 
     @GET

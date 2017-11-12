@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserlogResource {
     private final UserlogQueries userlogQueries;
     private final UserlogUpdate userlogUpdate;
-    private final AtomicLong counter;  // FIXME!!
+    private final AtomicLong counter;
 
     public UserlogResource(UserlogQueries userlogQueries, UserlogUpdate userlogUpdate) {
         this.userlogQueries = userlogQueries;

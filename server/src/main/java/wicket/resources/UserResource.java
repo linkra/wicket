@@ -5,6 +5,7 @@ import io.dropwizard.jersey.params.LongParam;
 import wicket.core.entity.User;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.update.UserUpdate;
+import wicket.views.UserView;
 
 
 import javax.ws.rs.*;
@@ -17,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserResource {
     private final UserQueries userQueries;
     private final UserUpdate userUpdate;
-    private final AtomicLong counter;  // FIXME!!
+    private final AtomicLong counter;
 
     public UserResource(UserQueries userQueries, UserUpdate userUpdate) {
         this.userQueries = userQueries;

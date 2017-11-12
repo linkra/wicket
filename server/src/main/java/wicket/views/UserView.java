@@ -1,4 +1,4 @@
-package wicket.resources;
+package wicket.views;
 
 import io.dropwizard.views.View;
 import wicket.core.entity.User;
@@ -9,7 +9,7 @@ public class UserView extends View {
     private final String surname;
 
     public UserView(User user) {
-        super("user.mustache");
+        super("server/src/main/resources/views/user.mustache");
         this.user = user;
         this.firstname = user.getFirstname();
         this.surname = user.getSurname();
@@ -26,4 +26,9 @@ public class UserView extends View {
     public String getSurname() {
         return surname;
     }
+
+    public String getViewClass() {
+        return UserView.class.getName();
+    }
+
 }

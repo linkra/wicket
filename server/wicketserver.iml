@@ -217,5 +217,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.glassfish.grizzly:grizzly-http-servlet:2.3.28" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.sun.jersey:jersey-client:1.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.sun.jersey:jersey-core:1.12" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard:dropwizard-assets:0.8.0" level="project" />
   </component>
 </module>

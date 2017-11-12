@@ -1,14 +1,19 @@
 package wicket;
 
+import com.github.mustachejava.MustacheNotFoundException;
+import com.google.common.base.Throwables;
 import io.dropwizard.Application;
 
 
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import io.dropwizard.views.ViewBundle;
+import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.spi.ExtendedExceptionMapper;
 import org.skife.jdbi.v2.DBI;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.queries.UserinfoQueries;
@@ -24,6 +29,8 @@ import wicket.resources.WicketResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.EnumSet;
 import java.util.Map;
 
@@ -40,6 +47,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<WicketConfiguration> bootstrap) {
+        bootstrap.addBundle(new AssetsBundle());
         bootstrap.addBundle(new ViewBundle<WicketConfiguration>() {
             @Override
             public Map<String, Map<String, String>> getViewConfiguration(WicketConfiguration config) {
@@ -64,6 +72,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
         environment.jersey().register(new UserResource(userQueries, userUpdate));
         environment.jersey().register(new UserlogResource(userlogQueries, userlogUpdate));
         environment.jersey().register(new UserinfoResource(userinfoQueries));
+
 
         final DatabaseHealthCheck dbihealthCheck =
                 new DatabaseHealthCheck(jdbi, config.getDataSourceFactory().getValidationQuery() );
@@ -95,7 +104,25 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-        
+
+        environment.jersey().register(new ExtendedExceptionMapper<WebApplicationException>() {
+            @Override
+            public Response toResponse(WebApplicationException exception) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            @Override
+            public boolean isMappable(WebApplicationException e) {
+                return Throwables.getRootCause(e).getClass() == MustacheNotFoundException.class;
+            }
+        });
+
+      /*  environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<Authentication.User>()
+                .setAuthenticator(new ExampleAuthenticator())
+                .setAuthorizer(new ExampleAuthorizer())
+                .setRealm("SUPER SECRET STUFF")
+                .buildAuthFilter()));
+        */
     }
 
 

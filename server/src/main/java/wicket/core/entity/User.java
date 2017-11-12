@@ -1,6 +1,9 @@
 package wicket.core.entity;
 
-public class User {
+import javax.security.auth.Subject;
+import java.security.Principal;
+
+public class User implements Principal {
 
     private Long userid;
 
@@ -15,6 +18,8 @@ public class User {
     private String pwd;
 
     private String username;
+
+    private String fullname;
 
     public User() {
     }
@@ -101,5 +106,23 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setFullname(String firstname, String surname) {
+        this.fullname = firstname + " " + surname;
+    }
+
+    public String getFullname() {
+        return firstname + " " + surname;
+    }
+
+    @Override
+    public String getName() {
+        return username;
+    }
+
+    @Override
+    public boolean implies(Subject subject) {
+        return false;
     }
 }

@@ -8,13 +8,7 @@ import java.util.Objects;
 
 public class WicketAuthorizer implements Authorizer<User> {
     @Override
-    public boolean authorize(User user, String s) {
-        // Allow any logged in user.
-        if (Objects.nonNull(user)) {
-            return true;
-        }
-        return false;
+    public boolean authorize(User user, String role) {
+        return user.getName().equals("linkra") && role.equals("ADMIN");
     }
-
-
 }

@@ -1,7 +1,9 @@
 package wicket.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import io.dropwizard.auth.Auth;
 import wicket.api.Saying;
+import wicket.core.entity.User;
 
 
 import javax.ws.rs.GET;
@@ -30,5 +32,11 @@ public class WicketResource {
     public Saying sayHello(@QueryParam("name") Optional<String> name) {
         final String value = String.format(template, name.orElse(defaultName));
         return new Saying(counter.incrementAndGet(), value);
+    }
+
+    @GET
+    @Path("/greeting")
+    public String getGreeting(@Auth Optional<User> userOpt) {
+        return userOpt.map(user -> "Hello, " + user.getName() + "!").orElse("Greetings, anonymous visitor!");
     }
 }

@@ -1,10 +1,13 @@
 package wicket.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import io.dropwizard.auth.Auth;
+import wicket.core.entity.User;
 import wicket.core.entity.Userlog;
 import wicket.db.jdbi.queries.UserlogQueries;
 import wicket.db.jdbi.update.UserlogUpdate;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -23,11 +26,20 @@ public class UserlogResource {
         this.counter = new AtomicLong();
     }
 
+
     @GET
     @Path("/{userid}")
     @Timed
     public List<Userlog> findSuccessfulAttemptsByUserid(@PathParam("userid") String userid) {
         return userlogQueries.findSuccessByUserid(userid);
+    }
+
+    @RolesAllowed("ADMIN")
+    @GET
+    @Path("/admin/{userid}")
+    @Timed
+    public List<Userlog> findSuccessfulAttemptsByUseridAsAdmin(@PathParam("userid") String userid, @Auth User user) {
+        return userlogQueries.findSuccessByUserid(userid);// ev skicka in User
     }
 
     @POST

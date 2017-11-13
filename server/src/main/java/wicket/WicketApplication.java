@@ -6,6 +6,9 @@ import io.dropwizard.Application;
 
 
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -13,8 +16,12 @@ import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.spi.ExtendedExceptionMapper;
 import org.skife.jdbi.v2.DBI;
+import wicket.auth.WicketAuthenticator;
+import wicket.auth.WicketAuthorizer;
+import wicket.core.entity.User;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.queries.UserinfoQueries;
 import wicket.db.jdbi.queries.UserlogQueries;
@@ -85,13 +92,10 @@ public class WicketApplication extends Application<WicketConfiguration> {
                 config.getTemplate(),
                 config.getDefaultName()
         );
-
         final TemplateHealthCheck healthCheck =
                 new TemplateHealthCheck(config.getTemplate());
         environment.healthChecks().register("template", healthCheck);
-
         environment.jersey().register(resource);
-
 
         // Enable CORS headers
         final FilterRegistration.Dynamic cors =
@@ -117,12 +121,15 @@ public class WicketApplication extends Application<WicketConfiguration> {
             }
         });
 
-      /*  environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<Authentication.User>()
-                .setAuthenticator(new ExampleAuthenticator())
-                .setAuthorizer(new ExampleAuthorizer())
-                .setRealm("SUPER SECRET STUFF")
-                .buildAuthFilter()));
-        */
+        environment.jersey().register(new AuthDynamicFeature(
+                new BasicCredentialAuthFilter.Builder<User>()
+                        .setAuthenticator(new WicketAuthenticator())
+                        .setAuthorizer(new WicketAuthorizer())
+                        .setRealm("SUPER SECRET STUFF")
+                        .buildAuthFilter()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        //If you want to use @Auth to inject a custom Principal type into your resource
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }
 
 

@@ -7,12 +7,14 @@ import wicket.core.entity.Userlog;
 import wicket.db.jdbi.queries.UserlogQueries;
 import wicket.db.jdbi.update.UserlogUpdate;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+@PermitAll
 @Path("rest/v0/wicket/userlog")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserlogResource {
@@ -34,12 +36,11 @@ public class UserlogResource {
         return userlogQueries.findSuccessByUserid(userid);
     }
 
-    @RolesAllowed("ADMIN")
     @GET
     @Path("/admin/{userid}")
     @Timed
-    public List<Userlog> findSuccessfulAttemptsByUseridAsAdmin(@PathParam("userid") String userid, @Auth User user) {
-        return userlogQueries.findSuccessByUserid(userid);// ev skicka in User
+    public List<Userlog> findSuccessfulAttemptsByUseridAsAdmin(@PathParam("userid") String userid) {
+        return userlogQueries.findSuccessByUserid(userid);
     }
 
     @POST

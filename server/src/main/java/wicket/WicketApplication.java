@@ -123,10 +123,11 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
         environment.jersey().register(new AuthDynamicFeature(
                 new BasicCredentialAuthFilter.Builder<User>()
-                        .setAuthenticator(new WicketAuthenticator())
+                        .setAuthenticator(new WicketAuthenticator(userQueries))
                         .setAuthorizer(new WicketAuthorizer())
                         .setRealm("SUPER SECRET STUFF")
                         .buildAuthFilter()));
+
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         //If you want to use @Auth to inject a custom Principal type into your resource
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));

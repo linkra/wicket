@@ -8,10 +8,12 @@ import wicket.db.jdbi.update.UserUpdate;
 import wicket.views.UserView;
 
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
 
 @Path("rest/v0/wicket/user")
 @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
@@ -26,6 +28,7 @@ public class UserResource {
         this.counter = new AtomicLong();
     }
 
+    @PermitAll
     @GET
     @Path("/surname/s/w/{surname}")
     @Timed
@@ -33,6 +36,7 @@ public class UserResource {
         return userQueries.findBySurname(surname);
     }
 
+    @PermitAll
     @GET
     @Path("/{userid}")
     @Timed
@@ -40,12 +44,14 @@ public class UserResource {
         return userQueries.findByUserid(userid.get());
     }
 
+    @PermitAll
     @GET
     @Timed
     public List<User> findAllUsers() {
         return userQueries.findAll();
     }
 
+    @PermitAll
     @GET
     @Path("/username/{username}")
     @Timed
@@ -67,6 +73,7 @@ public class UserResource {
         System.out.println("Login attempt by: " + user.getUsername());
     }
 
+    @PermitAll
     @GET
     @Path("/template/w/{userid}")
     @Timed
@@ -74,5 +81,4 @@ public class UserResource {
         return new UserView(userQueries.findByUserid(userid.get()));
     }
 
-    
 }

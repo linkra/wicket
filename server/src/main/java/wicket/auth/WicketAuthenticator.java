@@ -13,7 +13,7 @@ import java.util.Optional;
 public class WicketAuthenticator implements Authenticator<BasicCredentials, User> {
     private final UserQueries userQueries;
 
-
+    /* Inject UserQueries in WicketApplication.run */
     public WicketAuthenticator(UserQueries userQueries) {
         this.userQueries = userQueries;
     }

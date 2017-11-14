@@ -14,7 +14,7 @@ public class UserlogMapper implements ResultSetMapper<Userlog> {
         return new Userlog(resultSet.getLong("logid"),
                 resultSet.getLong("userid"),
                 resultSet.getInt("success"),
-                resultSet.getDate("attempt")
+                resultSet.getTimestamp("attempt")
         );
     }
 }

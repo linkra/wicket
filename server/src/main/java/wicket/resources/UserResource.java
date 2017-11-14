@@ -3,8 +3,10 @@ package wicket.resources;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.jersey.params.LongParam;
 import wicket.core.entity.User;
+import wicket.core.entity.Userlog;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.update.UserUpdate;
+import wicket.db.jdbi.update.UserlogUpdate;
 import wicket.views.UserView;
 
 
@@ -20,11 +22,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserResource {
     private final UserQueries userQueries;
     private final UserUpdate userUpdate;
+    private final UserlogUpdate userlogUpdate;
     private final AtomicLong counter;
 
-    public UserResource(UserQueries userQueries, UserUpdate userUpdate) {
+    public UserResource(UserQueries userQueries, UserUpdate userUpdate, UserlogUpdate userlogUpdate) {
         this.userQueries = userQueries;
         this.userUpdate = userUpdate;
+        this.userlogUpdate = userlogUpdate;
         this.counter = new AtomicLong();
     }
 
@@ -66,11 +70,22 @@ public class UserResource {
         userUpdate.insert(user);
     }
 
+    @PermitAll
     @POST
     @Path("/login")
     @Timed
-    public void login(User user) {
-        System.out.println("Login attempt by: " + user.getUsername());
+    public String login(User user) {
+        System.out.println("Login attempt by: " + user);  // TODO: loggning
+        String msg = "Sorry, no access";
+        // TODO: put in a service class
+        if (user != null) {
+            final User byUsername = this.userQueries.findByUsername(user.getUsername());
+            Userlog userlog = new Userlog(byUsername.getUserid(), 1);
+            userlogUpdate.insert(userlog);
+            msg = String.format("Welcome %s !", user.getUsername());
+        }
+        return msg;
+        
     }
 
     @PermitAll

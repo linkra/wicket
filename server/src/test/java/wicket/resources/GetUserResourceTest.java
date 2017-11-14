@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import wicket.core.entity.User;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.update.UserUpdate;
+import wicket.db.jdbi.update.UserlogUpdate;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -22,10 +23,11 @@ import static org.mockito.Mockito.*;
 public class GetUserResourceTest {
     private static final UserQueries queries = mock(UserQueries.class);
     private static final UserUpdate update = mock(UserUpdate.class);
+    private static final UserlogUpdate logupdate = mock(UserlogUpdate.class);
 
     @ClassRule
     public static final ResourceTestRule RULE = ResourceTestRule.builder()
-            .addResource(new UserResource(queries, update))
+            .addResource(new UserResource(queries, update, logupdate))
             .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .build();
 

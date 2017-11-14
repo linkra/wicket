@@ -1,17 +1,28 @@
 package wicket.core.entity;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Userlog {
     private Long logid;
     private Long userid;
     private Integer success;
-    private Date attempt;
+    private Timestamp attempt;
 
     public Userlog() {
     }
 
-    public Userlog(Long logid, Long userid, Integer success, Date attempt) {
+    public Userlog(Long userid, Integer success) {
+        this.logid = logid;
+        this.userid = userid;
+        this.success = success;
+        this.attempt = attempt;
+    }
+
+    public Userlog(Long logid, Long userid, Integer success, Timestamp attempt) {
         this.logid = logid;
         this.userid = userid;
         this.success = success;
@@ -42,11 +53,21 @@ public class Userlog {
         this.success = success;
     }
 
-    public Date getAttempt() {
+    public Timestamp getAttempt() {
         return attempt;
     }
 
-    public void setAttempt(Date attempt) {
+    public void setAttempt(Timestamp attempt) {
         this.attempt = attempt;
     }
+
+    public String getFormattedTimestamp() {
+        if (attempt == null) {
+            Calendar calendar = Calendar.getInstance();
+            Date now = calendar.getTime();
+            attempt = new Timestamp(now.getTime());
+        }
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(attempt);
+    }
+
 }

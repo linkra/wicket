@@ -76,7 +76,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
         final UserlogUpdate userlogUpdate = jdbi.onDemand(UserlogUpdate.class);
         final UserinfoQueries userinfoQueries = jdbi.onDemand(UserinfoQueries.class);
 
-        environment.jersey().register(new UserResource(userQueries, userUpdate));
+        environment.jersey().register(new UserResource(userQueries, userUpdate, userlogUpdate));
         environment.jersey().register(new UserlogResource(userlogQueries, userlogUpdate));
         environment.jersey().register(new UserinfoResource(userinfoQueries));
 

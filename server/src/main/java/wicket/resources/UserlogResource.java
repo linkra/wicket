@@ -37,7 +37,7 @@ public class UserlogResource {
     }
 
     @GET
-    @Path("/admin/{userid}")
+    @Path("/admin/{userid}")       // TODO: add role
     @Timed
     public List<Userlog> findSuccessfulAttemptsByUseridAsAdmin(@PathParam("userid") String userid) {
         return userlogQueries.findSuccessByUserid(userid);

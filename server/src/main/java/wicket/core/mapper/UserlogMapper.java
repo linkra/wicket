@@ -13,7 +13,8 @@ public class UserlogMapper implements ResultSetMapper<Userlog> {
     public Userlog map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         return new Userlog(resultSet.getLong("logid"),
                 resultSet.getLong("userid"),
-                resultSet.getInt("success")
+                resultSet.getInt("success"),
+                resultSet.getDate("attempt")
         );
     }
 }

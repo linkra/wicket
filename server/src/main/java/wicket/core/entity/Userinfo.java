@@ -1,5 +1,7 @@
 package wicket.core.entity;
 
+import java.sql.Date;
+
 public class Userinfo {
     private User user;
     private Userlog userlog;
@@ -7,7 +9,7 @@ public class Userinfo {
     public Userinfo() {
     }
 
-    public Userinfo(Long logid, Long userid, Integer success, String firstname, String surname, String pwd, String username) {
+    public Userinfo(Long logid, Long userid, Integer success, String firstname, String surname, String pwd, String username, Date attempt) {
         User user = new User();
         user.setFirstname(firstname);
         user.setSurname(surname);

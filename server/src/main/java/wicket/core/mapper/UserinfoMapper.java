@@ -17,7 +17,8 @@ public class UserinfoMapper implements ResultSetMapper<Userinfo> {
                 resultSet.getString("firstname"),
                 resultSet.getString("surname"),
                 resultSet.getString("pwd"),
-                resultSet.getString("username")
+                resultSet.getString("username"),
+                resultSet.getDate("attempt")
         );
     }
 }

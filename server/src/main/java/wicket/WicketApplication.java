@@ -14,13 +14,13 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import io.dropwizard.views.ViewBundle;
-import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.spi.ExtendedExceptionMapper;
 import org.skife.jdbi.v2.DBI;
 import wicket.auth.WicketAuthenticator;
 import wicket.auth.WicketAuthorizer;
+import wicket.core.dao.WicketDaoWrapper;
 import wicket.core.entity.User;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.queries.UserinfoQueries;
@@ -79,6 +79,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
         environment.jersey().register(new UserResource(userQueries, userUpdate, userlogUpdate));
         environment.jersey().register(new UserlogResource(userQueries, userlogQueries, userlogUpdate));
         environment.jersey().register(new UserinfoResource(userinfoQueries));
+        environment.jersey().register(new WicketDaoWrapper(userQueries, userUpdate, userlogQueries, userlogUpdate, userinfoQueries));
 
 
         final DatabaseHealthCheck dbihealthCheck =

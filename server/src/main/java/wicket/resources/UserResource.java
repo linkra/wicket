@@ -77,14 +77,14 @@ public class UserResource {
     @POST
     @Path("/login")
     @Timed
-    public String login(User user) {
-        System.out.println("2");
-       if (user != null && user.getUsername() != null) {
-            System.out.println("Login attempt by: " + user.getUsername());
+    public String login(User bodyuser) {
+        // user object is returned here from WicketAuthenticator if it's authorized, otherwise null
+       if (bodyuser != null && bodyuser.getUsername() != null) {
+            System.out.println("Login attempt by: " + bodyuser.getUsername());
         } else {
             System.out.println("Login attempt by someone without username");
         }
-        return authService.updateUserlogLoginSuccess(user);
+        return authService.updateUserlogLoginSuccess(bodyuser);
         
     }
 

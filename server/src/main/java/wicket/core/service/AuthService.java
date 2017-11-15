@@ -21,14 +21,17 @@ public class AuthService {
 
     public String updateUserlogLoginSuccess(User user) {
         // Find entire user from db
-        System.out.println("3");
         if (user != null) {
-            final User byUsername = this.userQueries.findByUsername(user.getUsername());
+            final User byUsername = getUserByUsername(user);
             Userlog userlog = new Userlog(byUsername.getUserid(), 1);
             userlogUpdate.insert(userlog);
             System.out.println("username in AuthService: " + user.getUsername());
             return String.format("Welcome %s !", user.getUsername());
         }
         return sendLoginNoSuccess();
+    }
+
+    public User getUserByUsername(User user) {
+        return this.userQueries.findByUsername(user.getUsername());
     }
 }

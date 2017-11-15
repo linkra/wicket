@@ -12,6 +12,7 @@ public class Userinfo {
 
     public Userinfo(Long logid, Long userid, Integer success, String firstname, String surname, String pwd, String username, Timestamp attempt) {
         User user = new User();
+        user.setUserid(userid);
         user.setFirstname(firstname);
         user.setSurname(surname);
         user.setPwd(pwd);

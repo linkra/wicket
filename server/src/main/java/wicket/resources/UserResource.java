@@ -90,7 +90,7 @@ public class UserResource {
 
     @PermitAll
     @GET
-    @Path("/template/w/{userid}")
+    @Path("/template/w/{userid}")     // for mustache template, not in use yet
     @Timed
     public UserView getUser(@PathParam("userid") LongParam userid) {
         return new UserView(userQueries.findByUserid(userid.get()));

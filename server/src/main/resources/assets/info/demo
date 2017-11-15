@@ -1,0 +1,49 @@
+registrera 
+
+{
+  "firstname":"Stina",
+  "surname":"Spelare",
+  "address":"Huvudgatan 3",
+  "email":"stina@spel.se",
+  "pwd":"88uubb",
+  "username":"stinnie"
+}{
+  "firstname":"Anna-Klara",
+  "surname":"Sten",
+  "address":"Huvudgatan 4",
+  "email":"anna-klara@spel.se",
+  "pwd":"88uuvv",
+  "username":"annie"
+}{
+  "firstname":"Sture",
+  "surname":"Spelare",
+  "address":"Huvudgatan 8",
+  "email":"sture@spel.se",
+  "pwd":"99uujj",
+  "username":"sturie"
+}
+logga in
+{
+  "username": "elinkra"
+}
+22g788   16
+{
+  "username": "carro"
+}
+22g711  17
+{
+  "username": "olle"
+}
+jjjhhh  18
+{
+  "username": "kolle"
+}
+jjjhhh  20
+{
+  "username": "anka"
+}
+0000   2
+{
+  "username": "linkra"
+}
+xxxgg777   1

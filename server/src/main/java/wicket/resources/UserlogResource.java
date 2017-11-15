@@ -32,7 +32,6 @@ public class UserlogResource {
         authService = new AuthService(userQueries, userlogUpdate);
     }
 
-
     @GET
     @Path("/{userid}")
     @Timed
@@ -43,7 +42,7 @@ public class UserlogResource {
     @POST
     @Path("/{userid}/list")
     @Timed
-    public List<Userlog> findLatestSuccessfulAttemptsByUserid(@PathParam("userid") String userid, User bodyuser) {
+    public List<Userlog> findOwnLatestSuccessfulAttemptsByUseridAndUsername(@PathParam("userid") String userid, User bodyuser) {
         // Get entire permitted user object
         User userByUsername = authService.getUserByUsername(bodyuser);
         if (userByUsername != null && userByUsername.getUserid() != null
@@ -63,6 +62,7 @@ public class UserlogResource {
     @POST
     @Timed
     public void addUserlog(Userlog userlog) {
+        // used for testing
         userlogUpdate.insert(userlog);
     }
 }

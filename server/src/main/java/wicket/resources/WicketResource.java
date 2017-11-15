@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/wicket")
+@Path("rest/v0/wicket")
 @Produces(MediaType.APPLICATION_JSON)
 public class WicketResource {
     private final String template;

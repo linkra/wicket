@@ -20,7 +20,10 @@ public class WicketAuthenticator implements Authenticator<BasicCredentials, User
 
     @Override
     public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException {
+        System.out.println("1");
         User user = this.userQueries.findByUsername(credentials.getUsername());
+        System.out.println("user obj in authenticate" + user);
+        //  Credentials are ok
         if (user != null && user.getPwd().equals(credentials.getPassword())) {
             return Optional.of(new User(credentials.getUsername()));
         }

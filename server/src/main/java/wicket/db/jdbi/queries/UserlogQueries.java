@@ -10,6 +10,10 @@ import java.util.List;
 
 @RegisterMapper(UserlogMapper.class)
 public interface UserlogQueries {
+
     @SqlQuery("select * from userlog where userid = :userid and success = '1'")
-    List<Userlog> findSuccessByUserid(@Bind("userid") String userid);
+    List<Userlog> findAllSuccessByUserid(@Bind("userid") String userid);
+
+    @SqlQuery("select * from userlog where userid = :userid and success = '1' order by logid DESC limit 5 offset 0")
+    List<Userlog> findLatestSuccessByUserid(@Bind("userid") String userid);
 }

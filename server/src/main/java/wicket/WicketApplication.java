@@ -87,7 +87,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
         environment.healthChecks().register("database", dbihealthCheck);
 
 
-        // TEST
+        // Starting test
         final WicketResource resource = new WicketResource(
                 config.getTemplate(),
                 config.getDefaultName()
@@ -130,6 +130,7 @@ public class WicketApplication extends Application<WicketConfiguration> {
 
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         //If you want to use @Auth to inject a custom Principal type into your resource
+        // TODO: add roles
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }
 

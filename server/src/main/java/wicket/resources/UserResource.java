@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.jersey.params.LongParam;
 import wicket.core.entity.User;
 import wicket.core.entity.Userlog;
+import wicket.core.service.AuthService;
 import wicket.db.jdbi.queries.UserQueries;
 import wicket.db.jdbi.update.UserUpdate;
 import wicket.db.jdbi.update.UserlogUpdate;
@@ -24,12 +25,14 @@ public class UserResource {
     private final UserUpdate userUpdate;
     private final UserlogUpdate userlogUpdate;
     private final AtomicLong counter;
+    private AuthService authService;
 
     public UserResource(UserQueries userQueries, UserUpdate userUpdate, UserlogUpdate userlogUpdate) {
         this.userQueries = userQueries;
         this.userUpdate = userUpdate;
         this.userlogUpdate = userlogUpdate;
         this.counter = new AtomicLong();
+        authService = new AuthService(userQueries, userlogUpdate);
     }
 
     @PermitAll
@@ -75,16 +78,13 @@ public class UserResource {
     @Path("/login")
     @Timed
     public String login(User user) {
-        System.out.println("Login attempt by: " + user);  // TODO: loggning
-        String msg = "Sorry, no access";
-        // TODO: put in a service class
-        if (user != null) {
-            final User byUsername = this.userQueries.findByUsername(user.getUsername());
-            Userlog userlog = new Userlog(byUsername.getUserid(), 1);
-            userlogUpdate.insert(userlog);
-            msg = String.format("Welcome %s !", user.getUsername());
+        System.out.println("2");
+       if (user != null && user.getUsername() != null) {
+            System.out.println("Login attempt by: " + user.getUsername());
+        } else {
+            System.out.println("Login attempt by someone without username");
         }
-        return msg;
+        return authService.updateUserlogLoginSuccess(user);
         
     }
 
